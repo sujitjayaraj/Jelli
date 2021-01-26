@@ -1,6 +1,12 @@
 const {prefix} = require("../../config.json");
 module.exports = async(app, msg) => {
     if(msg.author.bot) return;
+    const result = await app.db.guilds.findOne({"_id":msg.guild.id});
+    let prefix = "-";
+    if(result)
+        prefix = result.prefix;
+    else
+        app.db.addGuild(msg.guild);
     if(!msg.content.toLowerCase().startsWith(prefix)) return; //Message does not start with bot prefix
     const args = msg.content.slice(prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();

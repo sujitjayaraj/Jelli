@@ -1,15 +1,19 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('../config.json');
+const Database = require("./utility/database.js");
 const fs = require('fs')
 class Jelli {
     constructor(){
         this.bot = client;
         this.config = config;
+        this.db = new Database();
         this.commands = this.loadCommands();
     }
-    launch(){
+    async launch(){
         this.loadEvents();
+        console.log("All events have been loaded!");
+        await this.db.connect();
         console.log("The bot has been launched!");
         this.bot.login(config.token);
     }
