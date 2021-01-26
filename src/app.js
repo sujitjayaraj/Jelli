@@ -34,7 +34,10 @@ class Jelli {
             for(const file of commandFiles){
                 const command = require(`./commands/${category}/${file}`);
                 commands.set(file.split(".")[0], command);
+<<<<<<< HEAD
                 command.category = category;
+=======
+>>>>>>> main
             }
         }
         console.log("All commands have been loaded");
