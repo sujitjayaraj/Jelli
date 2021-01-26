@@ -23,11 +23,15 @@ class Jelli {
         console.log(`Loaded all event files!`);
     }
     loadCommands(){
-        const commandFiles = fs.readdirSync(__dirname + "/commands");
+        const categories = fs.readdirSync(__dirname + "/commands");
         const commands = new Discord.Collection();
-        for(const file of commandFiles){
-            const command = require(`./commands/${file}`);
-            commands.set(file.split(".")[0], command);
+        for(const category of categories){
+            const commandFiles = fs.readdirSync(__dirname + `/commands/${category}`).filter(file => file.endsWith(".js"));
+            for(const file of commandFiles){
+                const command = require(`./commands/${category}/${file}`);
+                commands.set(file.split(".")[0], command);
+                command.category = category;
+            }
         }
         console.log("All commands have been loaded");
         return commands;
