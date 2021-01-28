@@ -45,5 +45,21 @@ class Database{
         }
         return modlogs;
     }
+    /**
+     * 
+     * @param {String} guildID The ID of the Discord guild
+     */
+    async getGuildInfo(guildID){
+        let result;
+        try{
+            result = await this.guilds.findOne({"_id":guildID});
+            return result;
+        }
+        catch(error){
+            await this.connect();
+            result = await this.guilds.findOne({"_id":guildID});
+            return result;
+        }
+    }
 }
 module.exports = Database;
