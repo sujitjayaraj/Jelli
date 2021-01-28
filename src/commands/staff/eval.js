@@ -18,7 +18,7 @@ module.exports = {
 			if (segments.length === 1) {
                 msg.channel.send({embed:{
                     description: `\`\`\`js\n${segments[0]}\`\`\``,
-                    color: 0xc68958,
+                    color: 0x8e00ff,
                     footer:{
                         text: `Time taken: ${end - start}ms`
                     },
@@ -31,7 +31,7 @@ module.exports = {
 			}
 			else {
 				for (let i = 0; i < (segments.length < 5 ? segments.length : 5); i++) {
-					await msg.channel.send(msg.channel.id, `\`\`\`js\n${segments[i]}\`\`\``);
+					await msg.channel.send(`\`\`\`js\n${segments[i]}\`\`\``);
 				}
 			}
 		}

@@ -4,15 +4,16 @@ class Parser{
      * @param {*} msg Discord message object 
      * @param {String[]} args Array of args to find members from
      */
-    getGuildMembers(msg, args){
-        const guildMembers = args.map((arg, i) => {
+    async getGuildMembers(msg, args){
+        let guildMembers = [];
+        args.map(async (arg, i) => {
             if(/^<?@?!?(\d+)>?$/.test(arg)){
                 const userId = arg.match(/^<?@?!?(\d+)>?$/)[1];
-                const member = message.channel.guild.members.find(m => m.id === userId)
-                return member;
+                const member =await msg.guild.members.fetch(userId);
+                guildMembers.push(member);
             }
-            return undefined;
         })
-        return guildMembers.filter(x => x!== undefined);
+        return guildMembers;
     }
 }
+module.exports = Parser;
