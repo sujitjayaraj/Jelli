@@ -3,12 +3,14 @@ const client = new Discord.Client();
 const config = require('../config.json');
 const Parser = require('./utility/Parser.js');
 const Database = require("./utility/database.js");
-const fs = require('fs')
+const fs = require('fs');
+const Logger = require("./utility/Logger.js");
 class Jelli {
     constructor(){
         this.bot = client;
         this.config = config;
         this.parser = new Parser();
+        this.logger = new Logger(this);
         this.db = new Database();
         this.commands = this.loadCommands();
     }

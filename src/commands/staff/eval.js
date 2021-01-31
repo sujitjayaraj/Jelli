@@ -18,9 +18,9 @@ module.exports = {
 			if (segments.length === 1) {
                 msg.channel.send({embed:{
                     description: `\`\`\`js\n${segments[0]}\`\`\``,
-                    color: 0x8e00ff,
+                    color: 0x00ff00,
                     footer:{
-                        text: `Time taken: ${end - start}ms`
+                        text: `Time taken: ${end - start} ms`
                     },
                     author: {
                         name: msg.author.tag,
@@ -39,7 +39,7 @@ module.exports = {
             msg.channel.send({embed:{
                 title: 'Something went wrong',
                 description: `\`\`\`js\n${err}\`\`\``,
-                color: 0xc68958,
+                color: 0xff0000,
             }
             });
 		}

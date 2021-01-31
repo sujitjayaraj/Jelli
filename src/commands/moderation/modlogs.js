@@ -6,18 +6,12 @@ module.exports = {
     usage: "-modlogs @user",
 
     async execute(app, msg, args){
-        if(!msg.member.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"], {
-            checkAdmin: true,
-            checkOwner: true
-        })){
-            msg.reply("You do not have the permission to use the command.");
-            return;
-        }
-        const guildMembers = await app.parser.getGuildMembers(msg, args);
+        if(!msg.member.hasPermission(["KICK_MEMBERS", "BAN_MEMBERS"])) return;
+        const guildMembers = await app.parser.getIds(msg, args);
         const offender = guildMembers.length != 0?guildMembers[0]:undefined
         if(offender !== undefined){
             let embed = new MessageEmbed();
-            let modlogs = await app.db.getModLogs(msg, offender);
+            let modlogs = await app.db.getModLogs(msg, {id:offender});
             modlogs.forEach((log, i) => {
                 embed.addField(`Case ${i}`, `\`\`\`Name:${log.offender_name}\nAction:${log.action}\nReason:${log.reason}\nModerator:${log.moderator_name}\`\`\``);
             });

@@ -1,6 +1,6 @@
 module.exports = {
     name: "ping",
-    aliases: ["pong", "pang", "pong"],
+    aliases: ["pong", "pang", "peng"],
 
     async execute(app, msg, args){
         msg.reply({embed: {

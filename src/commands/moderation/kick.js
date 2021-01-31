@@ -4,10 +4,7 @@ module.exports = {
     usage: "-kick @user reason",
 
     async execute(app, msg, args){
-        if(!msg.member.hasPermission("KICK_MEMBERS")){
-            msg.reply("You do not have the permission to use the command.");
-            return;
-        }
+        if(!msg.member.hasPermission("KICK_MEMBERS")) return;
         if(!msg.guild.me.hasPermission("KICK_MEMBERS")){
             msg.reply("I do not have the `KICK_MEMBERS` permission, please check my permissions and try again.");
             return;
@@ -29,6 +26,7 @@ module.exports = {
             }
             try{
                 await offender.kick(reason);
+                app.logger.postModLog(msg, offender.user, "kick", reason);
                 msg.channel.send({embed:{
                     description: `**${offender.user.tag} has been kicked** | ${reason}`,
                     color: 0xff0000
