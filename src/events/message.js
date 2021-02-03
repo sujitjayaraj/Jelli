@@ -5,7 +5,11 @@ module.exports = async(app, msg) => {
     if(result)
         prefix = result.prefix;
     else
+<<<<<<< HEAD
         app.db.guilds.updateOne({"_id":msg.guild.id},{$set:{"_id":msg.guild.id, "name":msg.guild.name, "prefix":"-", "log_channel":""}}, {upsert:true});
+=======
+        app.db.guilds.updateOne({"_id":guild.id},{$set:{"_id":guild.id, "name":guild.name, "prefix":"-", "log_channel":""}}, {upsert:true});
+>>>>>>> main
     if(!msg.content.toLowerCase().startsWith(prefix) || msg.content.length == 1) return; //Message does not start with bot prefix
     const args = msg.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
