@@ -23,6 +23,7 @@ module.exports = {
         modlogs.forEach((log, i) => {
             embed.addField(`Case ${i}`, `\`\`\`Name:${log.offender_name}\nAction:${log.action}\nReason:${log.reason}\nModerator:${log.moderator_name}\`\`\``);
         });
+        embed.setTitle(`Modlogs for ${offender.user.tag}`);
         embed.setTimestamp(Date.now());
         embed.setAuthor(msg.author.tag, msg.author.avatarURL({dynamic:true}));
         msg.channel.send({embed:embed});

@@ -16,11 +16,10 @@ module.exports = {
             return;
         }
         const offenderID = guildMembers[0];
-        let reason = args.slice(1).join(" ");
+        let reason = args.join(" ");
         reason = reason.length == 0? "No reason provided" : reason;
         try{
-            offender = await msg.guild.members.unban(offenderID, reason);
-            msg.react(app.config.reactions.tick);
+            offender = args.length == 0? await msg.guild.members.unban(offenderID) : await msg.guild.members.unban(offenderID, reason);
             msg.channel.send({embed:{
                 description: `**${offender.tag} has been unbanned** | ${reason}`,
                 color: 0x00ff00
@@ -28,7 +27,6 @@ module.exports = {
             app.db.modlogs.insertOne({"offender_id":offender.id, "offender_name":offender.tag, "action":"unban", "reason":reason, "timestamp":msg.createdTimestamp, "moderator_id":msg.author.id, "moderator_name":msg.author.tag, "guild_id":msg.guild.id});
         }
         catch(error){
-            msg.react(app.config.reactions.cross);
             msg.channel.send(`❌ Unable to unban the provided user. Please enter a valid user ID or mention!`);
         }
     }

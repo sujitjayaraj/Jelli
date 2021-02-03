@@ -17,7 +17,7 @@ module.exports = {
             return;
         }
         const offender = guildMembers[0];
-        let reason = args.slice(1).join(" ");
+        let reason = args.join(" ");
         reason = args.length === 0? "No reason provided" : args.join(" ");
         if(!offender.bannable){
             msg.react(app.config.reactions.cross);
@@ -35,12 +35,12 @@ module.exports = {
             msg.channel.send("⚠️ Unable to DM the offender due to the offender's DM settings.");
         }
         try{
-            await offender.ban({reason:reason});
+            args.length === 0? await offender.ban() : await offender.ban(reason);
             msg.channel.send({embed:{
                 description: `**${offender.user.tag} has been banned** | ${reason}`,
                 color: 0xff0000
             }});
-            app.db.addModLog(msg, offender, "ban", args.slice(1).join(" "));
+            app.db.addModLog(msg, offender, "ban", reason);
         }
         catch(error){
             msg.react(app.config.reactions.cross);

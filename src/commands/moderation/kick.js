@@ -38,7 +38,7 @@ module.exports = {
                 description: `**${app.config.reactions.tick}${offender.user.tag} has been kicked** | ${reason}`,
                 color: 0xff0000
             }});
-            app.db.addModLog(msg, offender, "kick", args.slice(1).join(" "));
+            app.db.addModLog(msg, offender, "kick", reason);
         }
         catch(error){
             msg.channel.send(`**${app.config.reactions.cross} An error occurred while kicking the user. Please try again**`);
