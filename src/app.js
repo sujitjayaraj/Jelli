@@ -4,10 +4,13 @@ const config = require('../config.json');
 const Parser = require('./utility/Parser.js');
 const Database = require("./utility/database.js");
 const fs = require('fs');
+const Sentry = require('@sentry/node');
 const Logger = require("./utility/Logger.js");
+require('dotenv').config();
 class Jelli {
     constructor(){
         this.bot = client;
+        this.sentry = Sentry;
         this.config = config;
         this.parser = new Parser();
         this.logger = new Logger(this);
@@ -17,9 +20,14 @@ class Jelli {
     async launch(){
         this.loadEvents();
         console.log("All events have been loaded!");
+        this.sentry.init({
+            dsn: process.env.SENTRYDSN,
+            tracesSampleRate: 1.0,
+        });
+        console.log("Enabled Sentry error logging");
         await this.db.connect();
         console.log("The bot has been launched!");
-        this.bot.login(config.token);
+        this.bot.login(process.env.TOKEN);
     }
     loadEvents(){
         const eventFiles = fs.readdirSync(__dirname + "/events");

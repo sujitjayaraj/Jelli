@@ -4,7 +4,7 @@ module.exports = {
 
     async execute(app, msg, args){
         const newPrefix = args.join(" ");
-        await app.db.guilds.updateOne({"_id":msg.guild.id},{$set:{"prefix":newPrefix}});
+        await app.db.guilds.updateOne({"_id":msg.guild.id},{$set:{"prefix":newPrefix.toLowerCase()}});
         msg.channel.send(`Server prefix successfully updated to **${newPrefix}**`);
     }
 }

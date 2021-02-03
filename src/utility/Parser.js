@@ -2,10 +2,12 @@ class Parser{
     /**
      * 
      * @param {*} msg Discord message object 
-     * @param {String[]} args Array of args to find members from
+     * @param {String} content The string to find guild members from
+     * @returns {Promise<GuildMember[]>} A promise that resolve into an array of guildMembers
      */
-    async getGuildMembers(msg, args){
-        let guildMembers = args.map(async (arg, i) => {
+    getGuildMembers(msg, content){
+        const args = content.split(" ");
+        let guildMembers = args.map((arg, i) => {
             if(/^<?@?!?(\d+)>?$/.test(arg)){
                 const userId = arg.match(/^<?@?!?(\d+)>?$/)[1];
                 const member = msg.guild.members.fetch(userId);
@@ -13,16 +15,18 @@ class Parser{
             }
             return undefined;
         })
-        guildMembers.map(x => x!==undefined);
-        return await Promise.all(guildMembers);
+        guildMembers = guildMembers.filter(x => x!==undefined);
+        return Promise.all(guildMembers);
     }
     /**
      * 
      * @param {*} msg Discord message object
-     * @param {String[]} args Array of args to find channels from
+     * @param {String} content The string to find Discord GuildChannel objects from
+     * @returns {*} An array of iscord GuildChannel objects
      */
-    async getGuildChannels(msg, args){
-        const guildChannels = args.map(async (arg, i) => {
+    getGuildChannels(msg, content){
+        const args = content.split(" ");
+        let guildChannels = args.map((arg, i) => {
             if(/^<?#?(\d+)>?$/.test(arg)){
                 const channelID = arg.match(/^<?#?(\d+)>?$/)[1];
                 const channel = msg.guild.channels.cache.find(x => x.id === channelID);
@@ -30,15 +34,23 @@ class Parser{
             }
             return undefined;
         })
-        guildChannels.filter(x => x!==undefined);
-        return await Promise.all(guildChannels);
+        guildChannels = guildChannels.filter(x => x!==undefined);
+        return guildChannels;
     }
-    async getIds(msg, args){
-        let guildMembers = [];
-        args.map(async (arg, i) => {
-            if(/^<?@?!?(\d+)>?$/.test(arg)) guildMembers.push(arg.match(/^<?@?!?(\d+)>?$/)[1]);
+    /**
+     * 
+     * @param {*} msg Discord message object
+     * @param {String} content The string to find User IDs from
+     * @returns {String[]} An array of User IDs which may not be valid
+     */
+    getIds(msg, content){
+        const args = content.split(" ");
+        let ids = args.map((arg, i) => {
+            if(/^<?@?!?(\d+)>?$/.test(arg)) return arg.match(/^<?@?!?(\d+)>?$/)[1];
+            return undefined;
         });
-        return guildMembers;
+        ids = ids.filter(x => x!== undefined);
+        return ids;
     }
 }
 module.exports = Parser;
