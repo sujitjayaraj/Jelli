@@ -24,6 +24,10 @@ module.exports = {
             msg.channel.send(`❌ Unable to ban **${offender.user.tag} as the user is higher in the role hierarchy!`);
             return;
         }
+        if((msg.member.roles.highest.comparePositionTo(offender.roles.highest) <= 0) && (msg.author.id !== msg.guild.ownerID)){
+            msg.channel.send(`**${app.config.reactions.cross} Unable to ban ${offender.user.tag} as the user is equal or higher than you in the role hierarchy**`);
+            return;
+        }
         try{
             await offender.send(`You have been banned from the server **${msg.guild.name}** by moderator **${msg.author.tag}** with reason: **${reason}**`);
         }
