@@ -17,7 +17,7 @@ module.exports = {
         const offender = guildMembers[0];
         const reason = args.length === 0? "No reason provided" : args.join(" ");
         if(!offender.kickable){
-            msg.channel.send(`**${app.config.reactions.cross} Unable to kick **${offender.user.tag} as the user is equal or higher than me (the bot) in the role hierarchy**`);
+            msg.channel.send(`**${app.config.reactions.cross} Unable to kick ${offender.user.tag} as the user is equal or higher than me (the bot) in the role hierarchy**`);
             return;
         }
         if((msg.member.roles.highest.comparePositionTo(offender.roles.highest) <= 0) && (msg.author.id !== msg.guild.ownerID)){
