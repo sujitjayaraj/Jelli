@@ -1,0 +1,12 @@
+{
+    "prefix" : "-",
+    "database" : {
+        "user" : "sujit",
+        "name" : "Jelli",
+        "password" : "forgotpassword"
+    },
+    "reactions":{
+        "tick": "<a:Tick:804425195922128947>",
+        "cross": "<a:Cross:804421973630517298>"
+    }
+}
